@@ -1,0 +1,43 @@
+﻿@model IEnumerable<FPTBook.Models.CategoryModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Categories Request List</h1>
+
+
+@if (Model == null)
+{
+    <h2>There are no category request</h2>
+}
+else{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+
+                    <td>
+                        <a asp-action="Approve" asp-route-id="@item.Id">Approve</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}
+

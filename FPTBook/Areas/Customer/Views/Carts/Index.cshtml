@@ -1,0 +1,83 @@
+﻿@model IEnumerable<FPTBook.Models.CartModel>
+
+@{
+    ViewData["Title"] = "Index";
+    var list = Model.ToList();
+}
+
+@if(list.Count != 0 ){
+
+    <h1>
+       Cart of @list[0].User.FullName
+       </h1>
+
+}
+else {
+    <h1>
+        Cart
+</h1>
+}
+<td>
+    <a class="btn btn-primary" href="/Customer/Carts/CheckOut" role="button">Check Out</a>
+
+</td>
+<table class="table">
+    <thead>
+        <tr>
+   
+            <th>
+                @Html.DisplayNameFor(model => model.Book)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book.Cost)
+            </th>
+            <th>
+                Category
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+    
+            <td>
+                    @{
+                       var bookTitle =  (item.Book.Title).Substring(0, 30);
+                    }
+                    @bookTitle ....
+                </td>
+                <td class="col-3">
+
+                    @{
+                        var bookDes = (item.Book.Description).Substring(0, 200);
+                    }
+                    @bookDes ....
+                </td>
+
+
+                <td>$ @item.Book.Cost</td>
+                <td>@item.Book.Category.Name</td>
+            <td>
+
+                <form asp-area="Customer" asp-controller="Carts" asp-action="QuantityUpdate" >
+                        <input type="hidden" name="id" value="@item.Id" />
+                    <input type="number" id="quantity" name="quantity" min="1" max="5" value="@Html.DisplayFor(modelItem => item.Quantity)">
+                    <input type="submit">
+                </form>
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+

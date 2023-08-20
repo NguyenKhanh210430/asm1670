@@ -1,0 +1,58 @@
+﻿@model List<FPTBook.Models.BookModel>
+
+@{
+    ViewData["Title"] = "Index";
+    var bookCount = Model.Count();
+    int a = 3;
+    var countRow = (int)Math.Ceiling((double)bookCount / 3);
+}
+
+
+<p>
+    <a asp-action="Create">Create A New Book</a>
+</p>
+
+<div class="col-lg-12">
+    @for (int i = 0; i < countRow; i++)
+    {
+        <div class="row">
+            @{
+                var target = (i + 1) * a < bookCount ? (i + 1) * a : bookCount;
+            }
+            @for (int j = (i * a); j < target; j++)
+            {
+                <div class="col-sm-4 rounded-10 p-lg-2">
+
+                    <h4 class="card-header  overflow-hidden" style="height:100px">@Model[j].Title</h4>
+                    <div class="card-body" width="300" height="400">
+                        <img src="@Model[j].ImageURL">
+
+
+                    </div>
+                    <div class="card-body" style="height: 150px;">
+                        @Model[j].Description.Substring(0,200)
+                        <a href="/Customer/Home/Details?ISBN=@Model[j].ISBN">
+                            Read More...
+                        </a>
+                    </div>
+                    <br />
+                    <div class="card-footer pb-3">
+                        <span class="text-muted">@(Model[j].Cost) VND</span>
+                        <a href="/StoreOwner/Books/Delete?id=@Model[j].ISBN"
+                   class="btn btn-secondary btn-sm float-right">Remove
+               </a>
+
+                    </div>
+                </div>
+
+            }
+        </div>
+
+    }
+
+</div>
+
+<br />
+<br />
+<br />
+
